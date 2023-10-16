@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+    content="MoConVQ: Unified Physics-Based Motion Control via Scalable Discrete Representations">
+  <meta name="keywords" content="Animation; Physical Simulation; Reinforcement learning">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title></title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.png">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+
+<body>
+
+  <!-- Name and Author list and links -->
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">MoConVQ: Unified Physics-Based Motion Control via Scalable Discrete
+              Representations</h1>
+            <div class="is-size-4 publication-authors">
+              <span class="author-block"><a href="https://heyuanyao-pku.github.io/" target="_blank">Heyuan Yao</a><sup>1</sup>,</span>
+              <span class="author-block">Zhenhua Song<sup>1</sup>,</span>
+              <span class="author-block">Yuyang Zhou<sup>1</sup>,</span>
+              <span class="author-block"><a href="https://aubrey-ao.github.io/" target="_blank">Tenglong Ao</a><sup>1</sup>,</span>
+              <span class="author-block"><a href="https://baoquanchen.info/" target="_blank">Baoquan Chen</a><sup>1,2</sup>,</span>
+              <span class="author-block"><a href="https://libliu.info/" target="_blank">Libin Liu†</a><sup>1,2</sup></span>
+            </div>
+            <div class="is-size-5 publication-authors">
+            <span class="author-block">Peking University, China<sup>1</sup>,</span> 
+            <span class="author-block"> National Key Lab of General AI, China<sup>2</sup></span> 
+            </div>
+            
+            <iframe name="mainframe" style="width: 1pt; height: 1pt"> </iframe>
+              <div class="column has-text-centered">
+              <div class="publication-links">
+                <span class="link-block">
+                  <a href="www.pku.edu.cn" target="mainframe" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                    </span>
+                    <span>Paper (Coming Soon)</span>
+                  </a>
+                </span>
+                <!-- <span class="link-block">
+                  <a href="www.pku.edu.cn" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                    </span>
+                    <span>arXiv</span>
+                  </a>
+                </span> -->
+                <span class="link-block">
+                  <a href="www.pku.edu.cn" target="mainframe" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fab fa-youtube"></i>
+                    </span>
+                    <span>Video (Coming Soon)</span>
+                  </a>
+                </span>
+                <!-- <span class="link-block">
+                  <a href="www.pku.edu.cn" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fab fa-github"></i>
+                    </span>
+                    <span>Code</span>
+                  </a>
+                </span> -->
+              </div>
+            </div> 
+          
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- This is a video Example! -->
+  <section class="hero teaser">
+    <div class="container is-max-desktop">
+      <div class="hero-body">
+        <video id="teaser" autoplay muted loop playsinline height="100%">
+          <source src="./static/videos/teaser.mp4" type="video/mp4">
+        </video>
+        <h2 class="subtitle has-text-centered">
+          <span class="dnerf"></span> LLM Integrated Agent
+        </h2>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container is-max-desktop">
+      <!-- Abstract. -->
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>
+              In this work, we present MoConVQ, a novel unified framework for physics-based motion control
+              leveraging scalable discrete representations. Building upon vector quantized variational autoencoders
+              (VQ-VAE) and model-based reinforcement learning, our approach effectively learns motion embeddings from a
+              large, unstructured dataset spanning tens of hours of motion examples. The resultant motion representation
+              not only captures diverse motion skills but also offers a robust and intuitive interface for various
+              applications. We demonstrate the versatility of MoConVQ through several applications: universal
+              tracking control from various motion sources, interactive character control with latent motion
+              representations using supervised learning, physics-based motion generation from natural language
+              descriptions using the GPT framework, and, most interestingly, seamless integration with large language
+              models (LLMs) with in-context learning to tackle complex and abstract tasks.
+
+            </p>
+
+          </div>
+        </div>
+      </div>
+      <!--/ Abstract. -->
+
+      <!-- Paper video. -->
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Pipeline</h2>
+          <img src="./static/images/pipeline.png" width="100%" />
+          </iframe>
+        </div>
+      </div>
+      <!--/ Paper video. -->
+    </div>
+
+    <!-- Paper video.
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Video</h2>
+          <div class="publication-video">
+            <iframe src="https://www.youtube.com/embed/MrKrnHhk8IA?rel=0&amp;showinfo=0" frameborder="0"
+              allow="autoplay; encrypted-media" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+    </div> -->
+  </section>
+
+  <!-- Can be used as comparison. -->
+  <section class="hero is-light ">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="column is-centered has-text-centered">
+          <div class="content">
+            <h2 class="title is-2">Tracking Motions from Different Sources</h2>
+          </div>
+        </div>
+        <!--/ Concurrent Work. -->
+        <div class="columns is-centered">
+          <p>
+            Our motion representation captures diverse motion skills on a large unstructured dataset. We demonstrate its
+            capiticy by tracking motions from different sources: unseen dataset, retults of video-based pose estimation
+            and output of kinematic motion generator.
+          </p>
+        </div>
+        <div class="columns is-centered">
+          <div class="column content has-text-centered">
+            
+            <video id="matting-video" controls playsinline height="100%">
+              <source src="./static/videos/track/track_unseen.mp4" type="video/mp4">
+            </video>
+            <p>
+              Noisy dance from HDM05.
+            </p>
+          </div>
+          <div class="column content has-text-centered">
+            
+            <video id="matting-video" controls playsinline height="100%">
+              <source src="./static/videos/track/trackingHyberIK.mp4" type="video/mp4">
+            </video>
+            <p>
+              Output of HybrIK.
+            </p>
+          </div>
+        </div>
+        
+        <div class="columns is-centered">
+          <div class="column content">
+            <video id="matting-video" controls playsinline height="100%">
+              <source src="./static/videos/track/tracking_MLD.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="column content">
+            <video id="matting-video" controls playsinline height="100%">
+              <source src="./static/videos/track/tracking_MLD2.mp4" type="video/mp4">
+            </video>
+          </div>
+        </div>
+        <div class="columns is-centered">
+          <p>
+            Tracking output of motion latent diffution model.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+
+  <!--/ Video List with description for each one. -->
+  <section class="hero ">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="column is-centered has-text-centered">
+          <div class="content">
+            <h2 class="title is-2">Motion Generation with MoConGPT</h2>
+            <p>
+              Based on the discrete essence of the learned motion representation, our framework can integrate with
+              Generative Pretrained Transformer (GPT) to generate diverse motions. The generation can also be controlled
+              by natural language.
+            </p>
+          </div>
+        </div>
+
+
+        <div class="carousel-item active">
+          <div class="column is-centered has-text-centered">
+
+            <video poster="" id="steve" autoplay controls muted loop height="80%">
+              <source src="./static/videos/unconditional_generation.mp4" type="video/mp4">
+            </video>
+
+          </div>
+        </div>
+
+
+        <div class="column is-centered has-text-centered">
+          <div class="content">
+            <h2 class="title is-3">Text2Motion with MoConGPT</h2>
+
+          </div>
+        </div>
+        
+          <section class="hero">
+    <div class="hero-body">
+    <div class="container is-max-desktop">
+        <div  id="carousel-demo" class="carousel results-carousel">
+          
+            <div class="column is-centered has-text-centered">
+              <video poster="" id="steve" autoplay controls muted loop width="100%">
+                <source src="./static/videos/a person get down and crawls_Trim.mp4" type="video/mp4">
+              </video>
+              <h4 class=" has-text-centered">
+                a person <font color="red">get down</font> and <font color="red">crawls</font>.
+              </h4>
+            </div>
+          
+          <div class="column is-centered has-text-centered">
+            <video poster="" id="chair-tp" autoplay controls muted loop width="100%">
+              <source
+                src="./static/videos/a person raising left hand and putting down right hand for seconds then he jumps up and down for seconds_Trim.mp4"
+                type="video/mp4">
+            </video>
+            <h4 class=" has-text-centered">
+              a person <font color="red">raising left hand</font> and <font color="red">putting down right hand for
+                seconds</font>,
+              then he<font color="red"> jumps up and down for seconds</font>"
+            </h4>
+          </div>
+             
+          <div class="column is-centered has-text-centered">
+            <video poster="" id="shiba" autoplay controls muted loop width="100%">
+              <source
+                src="./static/videos/a person slightly crouches down and walks forward, then he stand still_Trim.mp4"
+                type="video/mp4">
+            </video>
+            <h4 class=" has-text-centered">
+              a person <font color="red">slightly crouches down</font> and <font color="red">walks forward</font>, then
+              he <font color="red">stand still</font>.
+
+            </h4>
+
+          </div>
+        
+          <div class="column is-centered has-text-centered">
+            <video poster="" id="genshin" autoplay controls muted loop width="100%">
+              <source src="./static/videos/a_man_is_kicking_with_right_leg_Trim.mp4" type="video/mp4">
+            </video>
+            <h4 class=" has-text-centered">
+              a man is <font color="red">kicking</font> with <font color="red"> right leg </font>.
+
+            </h4>
+          </div>
+        
+          <div class="column is-centered has-text-centered">
+            <video poster="" id="genshin" autoplay muted loop width="100%">
+              <source src="./static/videos/a_man_walks_forward_with_his_right_hands_up_Trim.mp4" type="video/mp4">
+            </video>
+            <h4 class=" has-text-centered">
+              a man <font color="red">walks forward</font> with his<font color="red"> right hands up </font>.
+
+            </h4>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+        
+      </div>
+    </div>
+
+  </section>
+
+
+
+
+
+  <!--/ Video List with description for each one. -->
+  <section class="hero is-light ">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="column is-centered has-text-centered">
+          <div class="content">
+            <h2 class="title is-2">Integration with LLM</h2>
+            <p>
+              Our framework can also seamlessly integrate with large
+              language models (LLMs) with in-context learning. We first demonstrate its capiticy of zero-shot
+              text2motion generation, followed by showcasing its effectiveness in completing complex and abstract tasks.
+            </p>
+          </div>
+          <div class="columns is-centered has-text-centered">
+            <div class="column is-four-fifths">
+              <h4 class="title is-4">In-context learning with Claude-2</h4>
+              <img src="./static/images/chatgpt_pipeline_v4.png" width="80%" />
+            </div>
+          </div>
+        </div>
+       
+        <div class="columns is-centered has-text-centered">
+          
+            <div class="carousel-item active">
+              <div class="column is-centered has-text-centered">
+                <video poster="" id="steve1" autoplay controls muted loop height="100%">
+                  <source src="./static/videos/claude/a person picking up a item and about to place it down_Trim.mp4"
+                    type="video/mp4">
+                </video>
+                <h4 class=" has-text-centered">
+                  a person <font color="red">picking up a item</font> and <font color="red">about to place it down</font>.
+                </h4>
+              </div>
+            </div>
+            <div class="carousel-item">
+            <div class="column is-centered has-text-centered">
+              <video poster="" id="chair-tp1" autoplay controls muted loop height="100%">
+                <source src="./static/videos/claude/a person walks forward and sits down_Trim.mp4" type="video/mp4">
+              </video>
+              <h4 class=" has-text-centered">
+                a person <font color="red"> walks forward</font> and <font color="red"> sits down</font>.
+              </h4>
+            </div>
+            </div>
+            <div class="carousel-item">
+            <div class="column is-centered has-text-centered">
+              <video poster="" id="shiba1" autoplay controls muted loop height="100%">
+                <source
+                  src="./static/videos/claude/a person walks forward for a long time and kicks, then he begins to dance_Trim.mp4"
+                  type="video/mp4">
+              </video>
+              <h4 class=" has-text-centered">
+                a person <font color="red">walks forward for a long time</font> and <font color="red">kicks</font>,
+                then he begins to <font color="red"> dance </font>.
+              </h4>
+            </div>
+            </div>
+          
+        </div>
+
+        <div class="column is-centered has-text-centered">
+
+          <div class="column">
+              <h3 class="title is-4">Abstract Task: Walk in Square Trajector</h3>
+            <div class="columns is-centered has-text-centered">
+              <div class="column is-centered has-text-centered">
+                <img src="./static/images/walk_square.png" width="50%" />
+              </div>
+              <div class="column is-centered has-text-centered">
+                <video poster="" id="genshin" autoplay controls muted loop width="100%">
+                  <source src="./static/videos/claude/walk_square_claude_Trim.mp4" type="video/mp4">
+                </video>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="column">
+                <h3 class="title is-4">Abstract Task: Imagined Senario</h3>
+            <div class="columns is-centered has-text-centered">
+              <div class="column is-centered has-text-centered">
+                <img src="./static/images/imagine_senario.png" width="50%" />
+              </div>
+              <div class="column is-centered has-text-centered">
+                <video poster="" id="genshin" autoplay controls muted loop width="100%">
+                  <source src="./static/videos/claude/pick up the key open the door and sit.mp4" type="video/mp4">
+                </video>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+
+
+  <!-- Can be used as comparison. -->
+  <section class="hero is-max-desktop">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <!--/ Concurrent Work. -->
+        <div class="columns is-centered"> <h2 class="title is-2">Other Tasks</h2> </div>
+        
+        <div class="columns is-centered">
+
+          <div class="column margined_box">
+            <div class="columns is-centered has-text-centered">
+              <h2 class="title is-4">Interactive control</h2>
+            </div>
+            <div class="columns is-centered has-text-centered">
+              <div class="column content">
+                <video id="matting-video" controls playsinline height="100%">
+                  <source src="./static/videos/interactive/interactive_control_Trim.mp4" type="video/mp4">
+                </video>
+                <p>
+                  Walking and running under user control.
+                </p>
+                <video id="matting-video" controls playsinline height="100%">
+                  <source src="./static/videos/interactive/external - Trim.mp4" type="video/mp4">
+                </video>
+                <p>
+                  Respond to external perturbations.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="column margined_box">
+            <div class="columns is-centered has-text-centered">
+              <h2 class="title is-4">Latent Motion Matching </h2>
+            </div>
+            <div class="columns is-centered has-text-centered">
+              <div class="column content">
+                <video id="matting-video" controls playsinline height="100%">
+                  <source src="./static/videos/motion_matching/latentmm1.mp4" type="video/mp4">
+                </video>
+                <p>
+                  Video of latent motion matching 1.
+                </p>
+                <video id="matting-video" controls playsinline height="100%">
+                  <source src="./static/videos/motion_matching/latentmm2.mp4" type="video/mp4">
+                </video>
+                <p>
+                  Video of latent motion matching 2.
+                </p>
+              </div>
+                
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <footer class="footer">
+    <!--  <div class="container">
+     <div class="content has-text-centered">
+       <a class="icon-link"
+       href="https://homes.cs.washington.edu/~kpar/nerfies/videos/nerfies_paper.pdf">
+       <i class="fas fa-file-pdf"></i>
+     </a>
+     <a class="icon-link" href="https://github.com/keunhong" class="external-link" disabled>
+       <i class="fab fa-github"></i>
+     </a>
+   </div> -->
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is licensed under a <a rel="license"
+              href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+              Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+          <p>
+            Website source code based on the <a href="https://nerfies.github.io/"> Nerfies</a> project page. If you want
+            to reuse their <a href="https://github.com/nerfies/nerfies.github.io">source code</a>, please credit them
+            appropriately.
+          </p>
+        </div>
+      </div>
+    </div>
+    </div>
+  </footer>
+
+
+  <script>
+		bulmaCarousel.attach('#carousel-demo', {
+			slidesToScroll: 1,
+			slidesToShow: 4
+		});
+		</script>
+</body>
+
+</html>
