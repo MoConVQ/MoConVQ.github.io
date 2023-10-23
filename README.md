@@ -1,5 +1,6 @@
 
-# Nerfies
+# MoConVQ
+Please visit <a href="https://pku-mocca.github.io/MoConVQ-page/">MoConVQ</a> page for more information.
 
 
 # Website License
