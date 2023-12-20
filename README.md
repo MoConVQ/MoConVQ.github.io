@@ -1,6 +1,6 @@
 
 # MoConVQ
-Please visit <a href="https://pku-mocca.github.io/MoConVQ-page/">MoConVQ</a> page for more information.
+Please visit <a href="https://moconvq.github.io/">MoConVQ</a> page for more information.
 
 
 # Website License
